@@ -5,12 +5,12 @@ env: # Set the secret as an input
   docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   clone-down:
-    name: Clone-Down
+    name: clone-down
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
     - uses: actions/checkout@v2
-    - name: upload repo
+    - name: Upload Repo
       uses: actions/upload-artifact@v2
       with:
         name: code
@@ -59,12 +59,11 @@ jobs:
       run: chmod +x ci/push-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA" && ci/push-docker.sh
   Component-test:
     runs-on: self-hosted
-    needs: Docker-image
+    needs: [Test,Build]
     steps:
-    - name: Download code
+    - name: component-test code
       uses: actions/download-artifact@v1
       with:
         name: code
         path: .
-    - name: Execute component test
-      run: chmod +x ci/component-test.sh && GIT_COMMIT="GA-$GITHUB_SHA" && ci/component-test.sh
+    - name: build docker
