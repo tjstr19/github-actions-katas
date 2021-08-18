@@ -5,7 +5,7 @@ env: # Set the secret as an input
   docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   clone-down:
-    name: clone-down
+    name: Clone-Down
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
